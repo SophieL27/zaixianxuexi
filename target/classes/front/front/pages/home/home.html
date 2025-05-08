@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>首页</title>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="author" content="order by mobanxiu.cn"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link href="https://cdn.bootcdn.net/ajax/libs/Swiper/5.4.5/css/swiper.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../xznstatic/css/common.css"/>
+    <link rel="stylesheet" href="../../xznstatic/css/style.css"/>
+    <script src="../../xznstatic/js/jquery-1.11.3.min.js"></script>
+    <script src="../../xznstatic/js/jquery.SuperSlide.2.1.1.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="../../css/theme.css"/>
+</head>
+<style>
+    html::after {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        content: '';
+        display: block;
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+    }
+
+    #test1 {
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    #test1 .layui-carousel-ind li {
+        width: 20px;
+        height: 10px;
+        border-width: 0;
+        border-style: solid;
+        border-color: rgba(0, 0, 0, .3);
+        border-radius: 6px;
+        background-color: #f7f7f7;
+        box-shadow: 0 0 6px rgba(91, 155, 213, 0.8);
+    }
+
+    #test1 .layui-carousel-ind li.layui-this {
+        width: 30px;
+        height: 10px;
+        border-width: 0;
+        border-style: solid;
+        border-color: rgba(0, 0, 0, .3);
+        border-radius: 6px;
+        background-color: #5B9BD5;
+    }
+
+    .recommend {
+        padding: 10px 0;
+        display: flex;
+        justify-content: center;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+    }
+
+    .recommend .box {
+        width: 1014px;
+    }
+
+    .recommend .box .title {
+        padding: 10px 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .recommend .box .title span {
+        padding: 0 10px;
+        line-height: 1.4;
+    }
+
+    .recommend .box .list {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .index-pv1 .box .list .list-item {
+        flex: 0 0 25%;
+        padding: 0 5px;
+        box-sizing: border-box;
+    }
+
+    .recommend .box .list .list-item-body {
+        border: 1px solid rgba(0, 0, 0, 3);
+        padding: 5px;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+
+    .recommend .box .list img {
+        width: 100%;
+        height: 100px;
+        display: block;
+        margin: 0 auto;
+        object-fit: cover;
+        max-width: 100%;
+    }
+
+    .recommend .box .list .name {
+        padding-top: 5px;
+        color: red;
+        font-size: 14px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .recommend .box .list .list-item1 {
+        flex: 0 0 100%;
+    }
+
+    .recommend .box .list .list-item2 {
+        flex: 0 0 50%;
+    }
+
+    .recommend .box .list .list-item3 {
+        flex: 0 0 33.33%;
+    }
+
+    .recommend .box .list .list-item4 {
+        flex: 0 0 25%;
+    }
+
+    .recommend .box .list .list-item5 {
+        flex: 0 0 20%;
+    }
+    
+    /* 新的课程卡片样式 */
+    .course-card {
+        background-color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        margin-bottom: 20px;
+        height: 100%;
+    }
+    
+    .course-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+    }
+    
+    .course-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+    
+    .course-card .course-content {
+        padding: 15px;
+    }
+    
+    .course-card .course-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+    
+    .course-card .course-desc {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        height: 60px;
+    }
+    
+    .course-card .course-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 10px;
+        border-top: 1px solid #eee;
+    }
+    
+    .course-card .course-author {
+        font-size: 14px;
+        color: #5B9BD5;
+    }
+    
+    .course-card .course-stats {
+        font-size: 14px;
+        color: #888;
+    }
+    
+    .course-card .course-stats i {
+        margin-right: 4px;
+    }
+    
+    /* 新的公告卡片样式 */
+    .notice-card {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+    
+    .notice-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        background-color: #f9f9f9;
+    }
+    
+    .notice-card .notice-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    .notice-card .notice-time {
+        font-size: 12px;
+        color: #888;
+        margin-bottom: 10px;
+    }
+    
+    .notice-card .notice-content {
+        font-size: 14px;
+        color: #666;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        line-height: 1.5;
+    }
+    
+    .section-title {
+        text-align: center;
+        margin: 30px 0;
+        position: relative;
+    }
+    
+    .section-title h2 {
+        font-size: 28px;
+        color: #333;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    
+    .section-title p {
+        font-size: 16px;
+        color: #666;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .section-title:after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 3px;
+        background-color: #5B9BD5;
+        margin: 15px auto 0;
+    }
+    
+    .btn-view-more {
+        background-color: #5B9BD5;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        display: inline-block;
+        margin-top: 20px;
+    }
+    
+    .btn-view-more:hover {
+        background-color: #8CC7F2;
+    }
+    
+    .network-features {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 40px 0;
+    }
+    
+    .feature-item {
+        flex: 0 0 25%;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .feature-item .feature-icon {
+        width: 80px;
+        height: 80px;
+        background-color: #f0f7ff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        color: #5B9BD5;
+        font-size: 32px;
+    }
+    
+    .feature-item h3 {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+    
+    .feature-item p {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.5;
+    }
+</style>
+<body>
+<div id="app">
+    <!-- 轮播图 -->
+    <div class="banner">
+        <div class="layui-carousel" id="test1"
+             :style='{"boxShadow":"0 0 10px rgba(0,0,0,0.1)","margin":"0 auto 30px auto","borderColor":"rgba(0,0,0,.3)","borderRadius":"8px","borderWidth":"0","width":"80%","borderStyle":"solid"}'>
+            <div carousel-item>
+                <div v-for="(item,index) in swiperList" :key="index">
+                    <img style="width: 100%;height: 100%;object-fit:cover;" :src="item.img"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 计算机网络特点介绍 -->
+    <div class="section-title">
+        <h2>计算机网络核心要素</h2>
+        <p>了解计算机网络的基本特点和工作原理</p>
+    </div>
+    
+    <div class="network-features">
+        <div class="feature-item">
+            <div class="feature-icon">
+                <i class="fas fa-sitemap"></i>
+            </div>
+            <h3>网络架构</h3>
+            <p>了解计算机网络的分层架构和各层功能，掌握OSI参考模型和TCP/IP协议族</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>网络安全</h3>
+            <p>学习加密技术、防火墙、入侵检测系统和网络攻击防御策略</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+            <h3>数据传输</h3>
+            <p>理解数据传输原理，学习各种网络协议如HTTP、TCP/UDP、IP等</p>
+        </div>
+        <div class="feature-item">
+            <div class="feature-icon">
+                <i class="fas fa-project-diagram"></i>
+            </div>
+            <h3>网络应用</h3>
+            <p>掌握常见网络应用的原理和实现，包括Web、电子邮件、DNS等</p>
+        </div>
+    </div>
+
+    <div id="content">
+        <!-- 公告信息区域 -->
+        <div class="section-title">
+            <h2>公告信息</h2>
+            <p>获取最新学习资讯和重要通知</p>
+        </div>
+        
+        <div style="display: flex;justify-content: center;width:100%">
+            <div style='width:80%'>
+                <div v-if="gonggaoList.length" style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+                    <div v-for="(item,index) in gonggaoList" v-if="index<4" :key="index" @click="jump('../gonggao/detail.html?id='+item.id)" class="notice-card" style="flex: 0 0 calc(50% - 10px);">
+                        <div class="notice-title">{{ item.gonggaoName }}</div>
+                        <div class="notice-time">{{ item.insertTime}}</div>
+                        <div class="notice-content" v-if="item.gonggaoContent">
+                            {{ item.gonggaoContent.replace(/<[^>]+>/g, '').substring(0, 100) }}{{ item.gonggaoContent.length > 100 ? '...' : '' }}
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <a @click="jump('../gonggao/list.html')" class="btn-view-more">
+                        查看更多 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 课程展示区域 -->
+        <div class="section-title" style="margin-top: 40px;">
+            <h2>计算机网络课程</h2>
+            <p>学习计算机网络的核心概念和技术</p>
+        </div>
+        
+        <div style="display: flex;justify-content: center;width:100%">
+            <div style='width:80%'>
+                <div v-if="kechengList.length > 0" style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+                    <div v-for="(item,index) in kechengList" v-if="index<6" :key="index" @click="jump('../kecheng/detail.html?id='+item.id)" 
+                         style="flex: 0 0 calc(33.33% - 20px); margin-bottom: 30px;">
+                        <div class="course-card">
+                            <img :src="item.kechengPhoto ? item.kechengPhoto.split(',')[0] : ''" alt="" />
+                            <div class="course-content">
+                                <div class="course-title">{{ item.kechengName }}</div>
+                                <div class="course-desc" v-if="item.kechengContent">
+                                    {{ item.kechengContent.replace(/<[^>]+>/g, '').substring(0, 100) }}...
+                                </div>
+                                <div class="course-meta">
+                                    <div class="course-author" v-if="item.laoshiName">
+                                        <i class="fas fa-user"></i> {{ item.laoshiName }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <a @click="jump('../kecheng/list.html')" class="btn-view-more">
+                        浏览所有课程 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../layui/layui.js"></script>
+<script src="../../js/vue.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../modules/config.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/Swiper/5.4.5/js/swiper.min.js"></script>
+
+<script>
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            // 轮播图
+            swiperList: [],
+            // 公告信息
+            gonggaoList: [],
+            // 课程信息
+            kechengList: [],
+        },
+        filters: {
+            newsDesc: function(val) {
+                if (val) {
+                    if (val.length > 200) {
+                        return val.substring(0, 200).replace(/<[^>]*>/g).replace(/undefined/g, '');
+                    } else {
+                        return val.replace(/<[^>]*>/g).replace(/undefined/g, '');
+                    }
+                }
+                return '';
+            }
+        },
+        methods: {
+            jump(url) {
+                jump(url)
+            }
+        }
+    })
+
+    layui.use(['layer', 'form', 'element', 'carousel', 'http', 'jquery', 'laypage'], function() {
+        var layer = layui.layer;
+        var element = layui.element;
+        var form = layui.form;
+        var carousel = layui.carousel;
+        var http = layui.http;
+        var jquery = layui.jquery;
+        var laypage = layui.laypage;
+
+        // 轮播图
+        http.request('config/list', 'get', {
+            page: 1,
+            limit: 5
+        }, function(res) {
+            if (res.data.list.length > 0) {
+                let swiperList = [];
+                res.data.list.forEach(element => {
+                    if (element.value != null) {
+                        swiperList.push({
+                            img: element.value
+                        });
+                    }
+                });
+                vue.swiperList = swiperList;
+
+                vue.$nextTick(() => {
+                    carousel.render({
+                        elem: '#test1',
+                        width: '100%',
+                        height: '450px',
+                        arrow: 'hover',
+                        anim: 'default',
+                        autoplay: 'true',
+                        interval: '3000',
+                        indicator: 'inside'
+                    });
+                })
+            }
+        });
+
+        // 获取公告信息
+        http.request('gonggao/list', 'get', {
+            page: 1,
+            limit: 6
+        }, function(res) {
+            vue.gonggaoList = res.data.list;
+        });
+
+        // 获取课程列表
+        http.request('kecheng/list', 'get', {
+            page: 1,
+            limit: 6
+        }, function(res) {
+            vue.kechengList = res.data.list;
+        });
+    });
+</script>
+</body>
+</html>

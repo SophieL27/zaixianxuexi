@@ -9,7 +9,7 @@ const base = {
     },
     getProjectName(){
         return {
-            projectName: "在线互动学习网站"
+            projectName: "计算机网络学习平台"
         } 
     }
 }

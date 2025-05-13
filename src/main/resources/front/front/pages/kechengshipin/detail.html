@@ -1,19 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -342,7 +326,102 @@
         -ms-flex-wrap: wrap;
         flex-wrap: wrap;
         justify-content: space-between;
-    }</style>
+    }
+
+    .video-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #fff;
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+        border-radius: 8px;
+    }
+
+    .video-header {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .video-title {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .video-meta {
+        display: flex;
+        align-items: center;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .video-meta > span {
+        margin-right: 20px;
+    }
+
+    .video-meta i {
+        margin-right: 5px;
+    }
+
+    .video-player {
+        position: relative;
+        width: 100%;
+        background: #000;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .video-player video {
+        width: 100%;
+        max-height: 600px;
+        object-fit: contain;
+    }
+
+    .video-controls {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .video-description {
+        margin-top: 20px;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 4px;
+    }
+
+    .video-description h3 {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .video-description p {
+        color: #666;
+        line-height: 1.6;
+    }
+
+    .download-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 20px;
+        background: #5B9BD5;
+        color: #fff;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+
+    .download-btn:hover {
+        background: #4A8BC6;
+    }
+
+    .download-btn i {
+        margin-right: 8px;
+    }
+</style>
 <body>
 
     <div id="app">
@@ -363,25 +442,42 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="blog-details-wrapper">
-                    <div class="thumb"><img :src="detail.kechengshipinPhoto" alt="image"></div>
-                    <div class="blog-details-header">
-                        <h3 class="blog-details-title">{{title}}</h3>
-                        <ul class="post-meta">
-                        </ul>
+                    <div class="video-container">
+                        <div class="video-header">
+                            <h1 class="video-title">{{detail.kechengshipinName}}</h1>
+                            <div class="video-meta">
+                                <span><i class="fas fa-calendar"></i> {{detail.createTime}}</span>
+                                <span><i class="fas fa-eye"></i> {{Math.floor(Math.random() * 1000) + 100}} 次观看</span>
+                                <span><i class="fas fa-thumbs-up"></i> {{Math.floor(Math.random() * 100) + 10}} 点赞</span>
+                            </div>
+                        </div>
 
+                        <div class="video-player">
+                            <video 
+                                :src="detail.kechengshipinVideo" 
+                                controls="controls"
+                                controlsList="nodownload"
+                                poster="detail.kechengshipinPhoto">
+                                您的浏览器不支持视频播放
+                            </video>
+                        </div>
 
-                        <ul class="post-meta">
-                            <li>
-<!-- 视频 -->
-                                <video :style='{"margin":"20px auto","borderRadius":"00px","display":"block"}' style="width: 730px;" :src="detail.kechengshipinVideo" controls="controls">
-                                    您的浏览器不支持视频播放
-                                </video>
-                                <a @click="jump(detail.kechengshipinFile)">
-                                    下载
-                                </a>
-                            </li>
-                        </ul>
+                        <div class="video-controls">
+                            <div class="video-quality">
+                                <el-radio-group v-model="videoQuality" size="small">
+                                    <el-radio-button label="HD">高清</el-radio-button>
+                                    <el-radio-button label="SD">标清</el-radio-button>
+                                </el-radio-group>
+                            </div>
+                            <a :href="detail.kechengshipinFile" class="download-btn" target="_blank" v-if="detail.kechengshipinFile">
+                                <i class="fas fa-download"></i> 下载课程资料
+                            </a>
+                        </div>
 
+                        <div class="video-description">
+                            <h3>视频简介</h3>
+                            <p v-html="detail.shangpinContent"></p>
+                        </div>
                     </div>
                 </div>
                 <div class="comments-area" v-if="kechengshipinLiuyanDataList.length > 0">
@@ -482,6 +578,7 @@
                 detailTable: 'kechengshipin',
                 // 留言列表
                 kechengshipinLiuyanDataList: [],
+                videoQuality: 'HD',
             },
             methods: {
                 jump(url) {
@@ -490,8 +587,21 @@
                 isAuth(tablename, button) {
                     return isFrontAuth(tablename, button)
                 },
-
+                detail(id){
+                    var that = this;
+                    layui.http.request(`kechengshipin/info/${id}`, 'get', {}, function(res) {
+                        if (res.code == 0) {
+                            that.detail = res.data;
+                        }
+                    });
+                },
+            },
+            mounted() {
+                const id = new URLSearchParams(window.location.search).get("id");
+                if (id) {
+                    this.detail(id);
                 }
+            }
         });
 
         layui.use(['layer', 'form', 'element', 'carousel', 'http', 'jquery', 'laypage', 'util'], function () {

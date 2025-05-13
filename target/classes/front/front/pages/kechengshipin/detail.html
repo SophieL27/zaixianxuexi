@@ -494,8 +494,8 @@
                         </div>
                         
                         <div class="video-actions">
-                            <a :href="detail.kechengshipinVideo" class="download-btn" download>
-                                <i class="fas fa-download"></i> 下载视频
+                            <a :href="detail.kechengshipinFile" class="download-btn" download v-if="detail.kechengshipinFile">
+                                <i class="fas fa-download"></i> 下载课程资料
                             </a>
                         </div>
 

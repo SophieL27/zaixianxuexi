@@ -2,7 +2,7 @@
     <div>
         <div class="container">
             <div class="login-form" style="backgroundColor:rgba(183, 174, 174, 0.5);borderRadius:22px">
-                <h1 class="h1" style="color:#000;fontSize:28px;">在线互动学习网站注册</h1>
+                <h1 class="h1" style="color:#000;fontSize:28px;">《计算机网络》在线学习系统注册</h1>
                 <el-form ref="rgsForm" class="rgs-form" :model="rgsForm" label-width="120px">
                         <el-form-item label="账号" class="input">
                             <el-input v-model="ruleForm.username" autocomplete="off" placeholder="账号"  />
